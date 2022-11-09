@@ -3,7 +3,9 @@ package com.gricsan.caradaro
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.gricsan.caradaro.databinding.ActivityNavHostBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class NavHostActivity : AppCompatActivity() {
 
     private var _binding: ActivityNavHostBinding? = null

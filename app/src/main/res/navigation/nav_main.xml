@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/user_list_screen"
-        android:name="com.gricsan.caradaro.features.userlist.presentation.UserListScreen"
+        android:name="com.gricsan.caradaro.features.user_list.presentation.UserListScreen"
         android:label="UserListScreen"
         tools:layout="@layout/fragment_user_list_screen" />
 

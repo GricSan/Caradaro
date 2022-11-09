@@ -3,6 +3,8 @@ buildscript {
     dependencies {
         // Navigation safe-args
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.5.3"
+        // Dagger-Hilt
+        classpath "com.google.dagger:hilt-android-gradle-plugin:2.44"
     }
 }
 
