@@ -1,9 +1,9 @@
 package com.gricsan.caradaro.features.user_list.data.datasources.remote.dtos
 
 import com.google.gson.annotations.SerializedName
-import com.gricsan.caradaro.features.user_list.domain.entities.UserVehicleInfo
+import com.gricsan.caradaro.base.data.db.entities.VehicleEntity
 
-data class UserVehicleInfoDTO(
+data class VehicleInfoDTO(
     @SerializedName("vehicleid")
     val vehicleid: Int?,
     @SerializedName("make")
@@ -20,8 +20,15 @@ data class UserVehicleInfoDTO(
     val foto: String?
 ) {
 
-    fun toDomainEntity(): UserVehicleInfo {
-        return UserVehicleInfo(vehicleid, make, model, year, color, vin, foto)
-    }
+    fun toVehicleEntity(ownerId: Int?) = VehicleEntity(
+        id = vehicleid ?: 0,
+        ownerId = ownerId ?: 0,
+        manufacturerName = make ?: "",
+        modelName = model ?: "",
+        releaseYear = year ?: "",
+        colorHexValue = color ?: "",
+        vinNumber = vin ?: "",
+        photoUrl = foto ?: ""
+    )
 
 }

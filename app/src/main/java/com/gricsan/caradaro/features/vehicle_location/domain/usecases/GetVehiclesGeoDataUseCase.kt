@@ -1,7 +1,7 @@
 package com.gricsan.caradaro.features.vehicle_location.domain.usecases
 
 import com.gricsan.caradaro.features.vehicle_location.domain.contracts.VehicleRepository
-import com.gricsan.caradaro.features.vehicle_location.domain.entities.VehicleGeoData
+import com.gricsan.caradaro.features.vehicle_location.domain.models.VehicleGeoData
 
 class GetVehiclesGeoDataUseCase(
     private val repo: VehicleRepository

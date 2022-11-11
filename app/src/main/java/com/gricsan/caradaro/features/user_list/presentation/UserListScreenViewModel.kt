@@ -4,8 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.gricsan.caradaro.base.domain.models.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 @HiltViewModel
@@ -13,7 +15,9 @@ class UserListScreenViewModel @Inject constructor(
     private val useCases: UserListScreenUseCases
 ) : ViewModel() {
 
-    private val _viewState = MutableLiveData(UserListScreenViewState())
+    private val _viewState = MutableLiveData<UserListScreenViewState>().apply {
+        value = UserListScreenViewState.Data()
+    }
     val viewState: LiveData<UserListScreenViewState> = _viewState
 
 
@@ -25,12 +29,22 @@ class UserListScreenViewModel @Inject constructor(
         }
     }
 
+
     private fun loadUserList() {
-        viewModelScope.launch {
-            val result = useCases.getUserList()
-            val newState = _viewState.value?.copy(userList = result)
+        useCases.getUsers().onEach { result ->
+            val newState = when (result) {
+                is Result.Success -> {
+                    UserListScreenViewState.Data(result.data)
+                }
+                is Result.Error -> {
+                    UserListScreenViewState.Error(result.message)
+                }
+                is Result.Loading -> {
+                    UserListScreenViewState.Loading
+                }
+            }
             _viewState.postValue(newState)
-        }
+        }.launchIn(viewModelScope)
     }
 
 }

@@ -1,9 +1,9 @@
-package com.gricsan.caradaro.features.vehicle_location.data.datasources.repos
+package com.gricsan.caradaro.features.vehicle_location.data.repos
 
 import com.gricsan.caradaro.features.vehicle_location.data.contracts.VehicleLocalDataSource
 import com.gricsan.caradaro.features.vehicle_location.data.contracts.VehicleRemoteDatasource
 import com.gricsan.caradaro.features.vehicle_location.domain.contracts.VehicleRepository
-import com.gricsan.caradaro.features.vehicle_location.domain.entities.VehicleGeoData
+import com.gricsan.caradaro.features.vehicle_location.domain.models.VehicleGeoData
 
 class VehicleRepositoryImpl(
     private val remoteDS: VehicleRemoteDatasource,

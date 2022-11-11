@@ -10,6 +10,17 @@
         android:id="@+id/user_list_screen"
         android:name="com.gricsan.caradaro.features.user_list.presentation.UserListScreen"
         android:label="UserListScreen"
-        tools:layout="@layout/fragment_user_list_screen" />
+        tools:layout="@layout/fragment_user_list_screen">
+        <action
+            android:id="@+id/action_user_list_screen_to_vehicleLocationScreen"
+            app:destination="@id/vehicle_location_screen" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/vehicle_location_screen"
+        android:name="com.gricsan.caradaro.features.vehicle_location.presentation.VehicleLocationScreen"
+        android:label="VehicleLocationScreen"
+        tools:layout="@layout/fragment_vehicle_location_screen" />
+
 
 </navigation>

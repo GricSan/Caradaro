@@ -1,15 +1,19 @@
 package com.gricsan.caradaro.features.user_list.presentation
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.gricsan.caradaro.base.utils.hide
+import com.gricsan.caradaro.base.utils.safeNavigate
+import com.gricsan.caradaro.base.utils.show
 import com.gricsan.caradaro.databinding.FragmentUserListScreenBinding
-import com.gricsan.caradaro.features.user_list.domain.entities.User
+import com.gricsan.caradaro.features.user_list.domain.models.User
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -29,12 +33,11 @@ class UserListScreen : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentUserListScreenBinding.inflate(layoutInflater, container, false)
-        initUserListRecyclerView(binding)
+        initUserListRecyclerView()
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        setupInteractions()
         observeViewState()
     }
 
@@ -49,35 +52,36 @@ class UserListScreen : Fragment() {
     }
 
 
-    private fun initUserListRecyclerView(binding: FragmentUserListScreenBinding) {
+    private fun initUserListRecyclerView() {
         binding.rvUserList.apply {
             adapter = UserListAdapter(this@UserListScreen::onUserListItemClicked).also {
                 userListAdapter = it
             }
-            layoutManager = LinearLayoutManager(binding.root.context)
+            layoutManager = LinearLayoutManager(requireContext())
         }
     }
 
     private fun onUserListItemClicked(user: User) {
-        Log.v("MyTag", "")
-    }
-
-    private fun setupInteractions() {
-
+        val action = UserListScreenDirections.actionUserListScreenToVehicleLocationScreen()
+        findNavController().safeNavigate(action)
     }
 
     private fun observeViewState() {
-        viewModel.viewState.observe(viewLifecycleOwner) { newState ->
-            updateViewState(newState)
+        viewModel.viewState.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is UserListScreenViewState.Data -> {
+                    binding.progress.hide()
+                    userListAdapter?.setData(state.userList)
+                }
+                is UserListScreenViewState.Error -> {
+                    binding.progress.hide()
+                    Toast.makeText(requireContext(), state.message, Toast.LENGTH_LONG).show()
+                }
+                is UserListScreenViewState.Loading -> {
+                    binding.progress.show()
+                }
+            }
         }
-    }
-
-    private fun updateViewState(newState: UserListScreenViewState) {
-        updateUserList(newState.userList)
-    }
-
-    private fun updateUserList(userList: List<User>) {
-        userListAdapter?.setData(userList)
     }
 
 }

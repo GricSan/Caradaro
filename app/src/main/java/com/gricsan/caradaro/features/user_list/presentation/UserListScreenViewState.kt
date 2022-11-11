@@ -1,7 +1,17 @@
 package com.gricsan.caradaro.features.user_list.presentation
 
-import com.gricsan.caradaro.features.user_list.domain.entities.User
+import com.gricsan.caradaro.features.user_list.domain.models.User
 
-data class UserListScreenViewState(
-    val userList: List<User> = emptyList()
-)
+sealed class UserListScreenViewState {
+
+    class Data(
+        val userList: List<User> = emptyList()
+    ) : UserListScreenViewState()
+
+    class Error(
+        val message: String
+    ) : UserListScreenViewState()
+
+    object Loading : UserListScreenViewState()
+
+}

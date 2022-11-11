@@ -1,4 +1,4 @@
-package com.gricsan.caradaro
+package com.gricsan.caradaro.base.presentation
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

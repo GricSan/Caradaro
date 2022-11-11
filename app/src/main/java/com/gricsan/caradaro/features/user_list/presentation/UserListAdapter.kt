@@ -4,11 +4,10 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.gricsan.caradaro.R
+import com.gricsan.caradaro.base.utils.loadImageFromUrl
 import com.gricsan.caradaro.databinding.VhUserListItemBinding
-import com.gricsan.caradaro.features.user_list.domain.entities.User
-import com.gricsan.caradaro.features.user_list.domain.entities.UserInfo
+import com.gricsan.caradaro.features.user_list.domain.models.User
 
 class UserListAdapter(
     private val onItemClicked: ((User) -> Unit)? = null
@@ -33,7 +32,7 @@ class UserListAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        data[position].info?.let { holder.bind(it) }
+        holder.bind(data[position])
     }
 
     override fun getItemCount(): Int {
@@ -54,23 +53,19 @@ class UserListAdapter(
         private val binding: VhUserListItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(info: UserInfo) {
+        fun bind(info: User) {
             binding.apply {
                 tvUserName.text = info.name
                 tvUserSurname.text = info.surname
-                Glide.with(ivUserPhoto.context)
-                    .load(info.photoUrl)
-                    .centerCrop()
-                    .placeholder(R.drawable.ic_user_photo_placeholder)
-                    .into(ivUserPhoto)
+                ivUserPhoto.loadImageFromUrl(
+                    url = info.photoUrl,
+                    placeholderResId = R.drawable.ic_user_photo_placeholder
+                )
             }
         }
 
         fun setupListeners() {
-            onItemClicked?.let { onItemClicked ->
-                val user = data[adapterPosition]
-                binding.root.setOnClickListener { onItemClicked(user) }
-            }
+            binding.root.setOnClickListener { onItemClicked?.invoke(data[adapterPosition]) }
         }
 
         fun clearListeners() {

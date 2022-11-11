@@ -1,7 +1,7 @@
 package com.gricsan.caradaro.features.user_list.presentation
 
-import com.gricsan.caradaro.features.user_list.domain.usecases.GetUserListUseCase
+import com.gricsan.caradaro.features.user_list.domain.usecases.GetUsersUseCase
 
 data class UserListScreenUseCases(
-    val getUserList: GetUserListUseCase
+    val getUsers: GetUsersUseCase
 )

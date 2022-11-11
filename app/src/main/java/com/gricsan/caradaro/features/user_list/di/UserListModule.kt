@@ -1,14 +1,12 @@
 package com.gricsan.caradaro.features.user_list.di
 
-import android.app.Application
-import androidx.room.Room
-import com.gricsan.caradaro.features.user_list.data.contracts.UserLocalDataSource
-import com.gricsan.caradaro.features.user_list.data.contracts.UserRemoteDataSource
-import com.gricsan.caradaro.features.user_list.data.datasources.local.UserRoomDatabase
+import com.gricsan.caradaro.base.data.db.AppRoomDatabase
+import com.gricsan.caradaro.base.data.db.daos.VehicleDAO
+import com.gricsan.caradaro.features.user_list.data.datasources.local.UserDAO
 import com.gricsan.caradaro.features.user_list.data.datasources.remote.UserApiService
 import com.gricsan.caradaro.features.user_list.data.repos.UserRepositoryImpl
 import com.gricsan.caradaro.features.user_list.domain.contracts.UserRepository
-import com.gricsan.caradaro.features.user_list.domain.usecases.GetUserListUseCase
+import com.gricsan.caradaro.features.user_list.domain.usecases.GetUsersUseCase
 import com.gricsan.caradaro.features.user_list.presentation.UserListScreenUseCases
 import dagger.Module
 import dagger.Provides
@@ -25,35 +23,39 @@ object UserListModule {
     @ViewModelScoped
     fun provideUserListUseCases(repository: UserRepository): UserListScreenUseCases {
         return UserListScreenUseCases(
-            getUserList = GetUserListUseCase(repository)
+            getUsers = GetUsersUseCase(repository)
         )
     }
 
     @Provides
     @ViewModelScoped
     fun provideUserRepository(
-        localDataSource: UserLocalDataSource,
-        remoteDataSource: UserRemoteDataSource,
+        userDAO: UserDAO,
+        vehicleDAO: VehicleDAO,
+        apiService: UserApiService,
     ): UserRepository {
         return UserRepositoryImpl(
-            localDS = localDataSource,
-            remoteDS = remoteDataSource
+            userDAO = userDAO,
+            vehicleDAO = vehicleDAO,
+            apiService = apiService
         )
     }
 
     @Provides
     @ViewModelScoped
-    fun provideUserLocalDataSource(app: Application): UserLocalDataSource {
-        return Room.databaseBuilder(
-            app,
-            UserRoomDatabase::class.java,
-            UserRoomDatabase.DATABASE_NAME
-        ).build().userDAO
+    fun provideUserDAO(database: AppRoomDatabase): UserDAO {
+        return database.userDAO
     }
 
     @Provides
     @ViewModelScoped
-    fun provideUserRemoteDataSource(retrofit: Retrofit): UserRemoteDataSource {
+    fun provideVehicleDAO(database: AppRoomDatabase): VehicleDAO {
+        return database.vehicleDAO
+    }
+
+    @Provides
+    @ViewModelScoped
+    fun provideUserApiService(retrofit: Retrofit): UserApiService {
         return retrofit.create(UserApiService::class.java)
     }
 

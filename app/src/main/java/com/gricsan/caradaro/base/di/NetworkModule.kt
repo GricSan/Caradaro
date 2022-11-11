@@ -1,4 +1,4 @@
-package com.gricsan.caradaro.base.network.di
+package com.gricsan.caradaro.base.di
 
 import com.google.gson.Gson
 import com.gricsan.caradaro.BuildConfig
