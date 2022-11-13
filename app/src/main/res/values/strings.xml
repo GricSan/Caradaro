@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Caradaro</string>
+
+    <!--  UserList screen values -->
+    <string name="user_list_title">Users</string>
+    <string name="user_list_vh_user_name">Name: %1$s</string>
+    <string name="user_list_vh_user_surname">Surname: %1$s</string>
+    <string name="user_list_vh_user_photo_description">User photo</string>
 </resources>

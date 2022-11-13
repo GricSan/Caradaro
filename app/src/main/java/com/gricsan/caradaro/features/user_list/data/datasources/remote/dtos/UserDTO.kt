@@ -9,7 +9,7 @@ data class UserDTO(
     @SerializedName("owner")
     val owner: UserInfoDTO?,
     @SerializedName("vehicles")
-    val vehicles: List<VehicleInfoDTO>?
+    val vehicles: List<VehicleInfoDTO>
 ) {
 
     fun toUserEntity() = UserEntity(
@@ -17,7 +17,7 @@ data class UserDTO(
         name = owner?.name ?: "",
         surname = owner?.surname ?: "",
         photoUrl = owner?.foto ?: "",
-        vehiclesIds = vehicles?.map { it.vehicleid ?: 0 } ?: emptyList()
+        vehiclesIds = vehicles.map { it.vehicleid ?: 0 }
     )
 
 }

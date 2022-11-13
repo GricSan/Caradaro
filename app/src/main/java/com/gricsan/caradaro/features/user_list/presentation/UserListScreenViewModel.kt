@@ -15,15 +15,16 @@ class UserListScreenViewModel @Inject constructor(
     private val useCases: UserListScreenUseCases
 ) : ViewModel() {
 
-    private val _viewState = MutableLiveData<UserListScreenViewState>().apply {
-        value = UserListScreenViewState.Data()
-    }
+    private val _viewState = MutableLiveData<UserListScreenViewState>(UserListScreenViewState.Data())
     val viewState: LiveData<UserListScreenViewState> = _viewState
 
 
     fun handleEvent(event: UserListScreenEvent) {
         when (event) {
             is UserListScreenEvent.ViewReady -> {
+                loadUserList()
+            }
+            is UserListScreenEvent.UserListRefreshRequested -> {
                 loadUserList()
             }
         }

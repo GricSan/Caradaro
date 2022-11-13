@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--  Screen header values  -->
+    <dimen name="screen_header_height">48dp</dimen>
+    <dimen name="screen_header_text_size">16dp</dimen>
+    <dimen name="screen_header_elevation">4dp</dimen>
+
+    <!--  UserList screen values  -->
+    <dimen name="user_list_vh_card_radius">6dp</dimen>
+    <dimen name="user_list_vh_card_elevation">2dp</dimen>
+</resources>

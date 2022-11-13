@@ -1,37 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="4dp">
+    android:elevation="@dimen/user_list_vh_card_elevation"
+    app:cardCornerRadius="@dimen/user_list_vh_card_radius">
 
-    <ImageView
-        android:id="@+id/iv_user_photo"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/tv_user_name"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        app:layout_constraintStart_toEndOf="@id/iv_user_photo"
-        app:layout_constraintTop_toTopOf="@id/iv_user_photo"
-        tools:text="User name" />
+        android:padding="8dp">
 
-    <TextView
-        android:id="@+id/tv_user_surname"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="4dp"
-        app:layout_constraintStart_toEndOf="@id/iv_user_photo"
-        app:layout_constraintTop_toBottomOf="@id/tv_user_name"
-        tools:text="User surname" />
+        <ImageView
+            android:id="@+id/iv_user_photo"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:contentDescription="@string/user_list_vh_user_photo_description"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/tv_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            app:layout_constraintStart_toEndOf="@id/iv_user_photo"
+            app:layout_constraintTop_toTopOf="@id/iv_user_photo"
+            tools:text="User name" />
+
+        <TextView
+            android:id="@+id/tv_user_surname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            app:layout_constraintStart_toEndOf="@id/iv_user_photo"
+            app:layout_constraintTop_toBottomOf="@id/tv_user_name"
+            tools:text="User surname" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>
