@@ -17,12 +17,16 @@ fun View.hide(state: Int = View.GONE) {
 fun ImageView.loadImageFromUrl(
     url: String,
     @DrawableRes
-    placeholderResId: Int = 0,
+    thumbnailResId: Int = 0,
     options: RequestOptions = RequestOptions()
 ) {
+    val thumbnail = Glide.with(context)
+        .load(thumbnailResId)
+        .apply(options)
+
     Glide.with(context)
         .load(url)
-        .placeholder(placeholderResId)
+        .thumbnail(thumbnail)
         .apply(options)
         .into(this)
 }

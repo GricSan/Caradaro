@@ -92,7 +92,7 @@ class UserListAdapter(
                     root.resources.getString(R.string.user_list_vh_user_surname, info.surname)
                 ivUserPhoto.loadImageFromUrl(
                     url = info.photoUrl,
-                    placeholderResId = R.drawable.ic_user_photo_placeholder,
+                    thumbnailResId = R.drawable.img_user_photo_placeholder,
                     options = itemImageTransformationOptions
                 )
             }
