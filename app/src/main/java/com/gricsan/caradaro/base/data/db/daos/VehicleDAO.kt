@@ -3,18 +3,33 @@ package com.gricsan.caradaro.base.data.db.daos
 import androidx.room.*
 import com.gricsan.caradaro.base.data.db.entities.VehicleEntity
 import com.gricsan.caradaro.base.domain.models.Vehicle
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface VehicleDAO {
 
-    @Query("SELECT * FROM vehicle WHERE id = :id")
-    suspend fun getVehicleById(id: Int): Vehicle?
+    @Query("SELECT * FROM vehicle WHERE id = :vehicleId")
+    suspend fun getVehicleById(vehicleId: Int): Vehicle?
 
     @Query("SELECT * FROM vehicle")
-    suspend fun getVehicles(): List<Vehicle>
+    fun getVehicles(): Flow<List<Vehicle>>
 
-    @Query("SELECT * FROM vehicle where ownerId = :id")
-    suspend fun getVehiclesByOwnerId(id: Int): List<Vehicle>
+    @Query("SELECT * FROM vehicle where ownerId = :ownerId")
+    fun getVehiclesByOwnerId(ownerId: Int): Flow<List<Vehicle>>
+
+    @Query(
+        "UPDATE vehicle SET " +
+        "latitude = :latitude," +
+        "longitude = :longitude," +
+        "locationExpirationTimestamp = :expirationTimestamp " +
+        "WHERE id = :vehicleId"
+    )
+    suspend fun updateVehicleLocationData(
+        vehicleId: Int,
+        latitude: Double?,
+        longitude: Double?,
+        expirationTimestamp: Long?
+    )
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertVehicle(vehicle: VehicleEntity)

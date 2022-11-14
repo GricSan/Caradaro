@@ -63,7 +63,7 @@ class UserListScreen : Fragment() {
     }
 
     private fun onUserListItemClicked(user: User) {
-        val action = UserListScreenDirections.actionUserListScreenToVehicleLocationScreen()
+        val action = UserListScreenDirections.actionUserListScreenToVehicleLocationScreen(user.id)
         findNavController().safeNavigate(action)
     }
 

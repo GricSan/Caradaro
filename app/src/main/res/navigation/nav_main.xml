@@ -18,9 +18,14 @@
 
     <fragment
         android:id="@+id/vehicle_location_screen"
-        android:name="com.gricsan.caradaro.features.vehicle_location.presentation.VehicleLocationScreen"
+        android:name="com.gricsan.caradaro.features.location.presentation.LocationScreen"
         android:label="VehicleLocationScreen"
-        tools:layout="@layout/fragment_vehicle_location_screen" />
+        tools:layout="@layout/fragment_location_screen">
+        <argument
+            android:name="userId"
+            app:argType="integer"
+            app:nullable="false" />
+    </fragment>
 
 
 </navigation>

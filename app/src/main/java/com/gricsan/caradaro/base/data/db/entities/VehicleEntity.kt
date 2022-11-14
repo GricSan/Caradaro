@@ -14,14 +14,20 @@ data class VehicleEntity(
     val releaseYear: String,
     val colorHexValue: String,
     val vinNumber: String,
-    val photoUrl: String
+    val photoUrl: String,
+    val latitude: Double?,
+    val longitude: Double?,
+    val locationExpirationTimestamp: Long?
 ) {
 
     fun toVehicle() = Vehicle(
         id = id,
+        manufacturerName = manufacturerName,
         modelName = modelName,
         colorHexValue = colorHexValue,
-        photoUrl = photoUrl
+        photoUrl = photoUrl,
+        latitude = latitude,
+        longitude = longitude
     )
 
 }

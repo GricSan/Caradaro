@@ -8,4 +8,9 @@
     <!--  UserList screen values  -->
     <dimen name="user_list_vh_card_radius">6dp</dimen>
     <dimen name="user_list_vh_card_elevation">2dp</dimen>
+
+    <!--  Location screen values  -->
+
+    <!--  VehicleInfoCard view values  -->
+    <dimen name="vehicle_info_card_height">32dp</dimen>
 </resources>

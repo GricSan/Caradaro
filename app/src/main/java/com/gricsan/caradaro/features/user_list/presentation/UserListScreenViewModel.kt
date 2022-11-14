@@ -15,7 +15,8 @@ class UserListScreenViewModel @Inject constructor(
     private val useCases: UserListScreenUseCases
 ) : ViewModel() {
 
-    private val _viewState = MutableLiveData<UserListScreenViewState>(UserListScreenViewState.Data())
+    private val _viewState = MutableLiveData<UserListScreenViewState>()
+        .apply { value = UserListScreenViewState.Data() }
     val viewState: LiveData<UserListScreenViewState> = _viewState
 
 
@@ -35,10 +36,10 @@ class UserListScreenViewModel @Inject constructor(
         useCases.getUsers().onEach { result ->
             val newState = when (result) {
                 is Result.Success -> {
-                    UserListScreenViewState.Data(result.data)
+                    UserListScreenViewState.Data(userList = result.data)
                 }
                 is Result.Error -> {
-                    UserListScreenViewState.Error(result.message)
+                    UserListScreenViewState.Error(message = result.message)
                 }
                 is Result.Loading -> {
                     UserListScreenViewState.Loading

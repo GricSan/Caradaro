@@ -4,11 +4,11 @@ import com.gricsan.caradaro.features.user_list.domain.models.User
 
 sealed class UserListScreenViewState {
 
-    class Data(
+    data class Data(
         val userList: List<User> = emptyList()
     ) : UserListScreenViewState()
 
-    class Error(
+    data class Error(
         val message: String
     ) : UserListScreenViewState()
 

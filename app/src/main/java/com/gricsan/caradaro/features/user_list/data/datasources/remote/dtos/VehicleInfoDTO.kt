@@ -28,7 +28,10 @@ data class VehicleInfoDTO(
         releaseYear = year ?: "",
         colorHexValue = color ?: "",
         vinNumber = vin ?: "",
-        photoUrl = foto ?: ""
+        photoUrl = foto ?: "",
+        latitude = null,
+        longitude = null,
+        locationExpirationTimestamp = null
     )
 
 }
