@@ -1,9 +1,8 @@
-package com.gricsan.caradaro.features.user_list.data.datasources.local
+package com.gricsan.caradaro.base.data.db.daos
 
 import androidx.room.*
 import com.gricsan.caradaro.base.data.db.entities.UserEntity
 import com.gricsan.caradaro.features.user_list.domain.models.User
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface UserDAO {
@@ -12,7 +11,7 @@ interface UserDAO {
     suspend fun getUserById(userId: Int): User?
 
     @Query("SELECT * FROM user")
-    fun getUsers(): Flow<List<User>>
+    suspend fun getUsers(): List<User>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertUser(user: UserEntity)

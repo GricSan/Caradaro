@@ -5,7 +5,6 @@ import com.gricsan.caradaro.features.location.data.datasources.remote.LocationAp
 import com.gricsan.caradaro.features.location.data.repos.LocationRepositoryImpl
 import com.gricsan.caradaro.features.location.domain.contracts.LocationRepository
 import com.gricsan.caradaro.features.location.domain.usecases.GetUserVehiclesLocationsUseCase
-import com.gricsan.caradaro.features.location.domain.usecases.GetVehicleDetailsUseCase
 import com.gricsan.caradaro.features.location.presentation.LocationScreenUseCases
 import dagger.Module
 import dagger.Provides
@@ -22,8 +21,7 @@ object LocationModule {
     @ViewModelScoped
     fun provideLocationUseCases(repository: LocationRepository): LocationScreenUseCases {
         return LocationScreenUseCases(
-            getUserVehiclesLocations = GetUserVehiclesLocationsUseCase(repository),
-            getVehicleDetails = GetVehicleDetailsUseCase(repository)
+            getUserVehiclesLocations = GetUserVehiclesLocationsUseCase(repository)
         )
     }
 

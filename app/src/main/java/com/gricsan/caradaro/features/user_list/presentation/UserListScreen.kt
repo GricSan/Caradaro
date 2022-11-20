@@ -22,6 +22,7 @@ class UserListScreen : Fragment() {
 
     private val viewModel: UserListScreenViewModel by viewModels()
 
+    private var errorToast: Toast? = null
     private var userListAdapter: UserListAdapter? = null
 
 
@@ -53,18 +54,18 @@ class UserListScreen : Fragment() {
 
     private fun initUserListRecyclerView() {
         binding.rvUserList.apply {
-            layoutManager = LinearLayoutManager(requireContext())
+            layoutManager = LinearLayoutManager(context)
             adapter = UserListAdapter(this@UserListScreen::onUserListItemClicked)
                 .also {
-                    userListAdapter = it
                     addItemDecoration(it.itemDecoration)
+                    userListAdapter = it
                 }
         }
     }
 
     private fun onUserListItemClicked(user: User) {
-        val action = UserListScreenDirections.actionUserListScreenToVehicleLocationScreen(user.id)
-        findNavController().safeNavigate(action)
+        UserListScreenDirections.actionUserListScreenToVehicleLocationScreen(user.id)
+            .let { findNavController().safeNavigate(it) }
     }
 
     private fun setupInteractions() {
@@ -74,18 +75,18 @@ class UserListScreen : Fragment() {
     }
 
     private fun observeViewState() {
-        viewModel.viewState.observe(viewLifecycleOwner) { state ->
-            when (state) {
-                is UserListScreenViewState.Data -> {
-                    binding.swipeRefreshDrivers.isRefreshing = false
-                    userListAdapter?.setData(state.userList)
-                }
-                is UserListScreenViewState.Error -> {
-                    binding.swipeRefreshDrivers.isRefreshing = false
-                    Toast.makeText(requireContext(), state.message, Toast.LENGTH_LONG).show()
-                }
-                is UserListScreenViewState.Loading -> {
-                    binding.swipeRefreshDrivers.isRefreshing = true
+        with(viewModel) {
+            userListViewState.observe(viewLifecycleOwner) { state ->
+                // Hide displayed error (if any)
+                errorToast?.cancel()
+                // Update loading state
+                binding.swipeRefreshDrivers.isRefreshing = state.loading
+                // Set data
+                userListAdapter?.setData(state.data)
+                // Display error (if any)
+                state.error?.let { message ->
+                    errorToast = Toast.makeText(requireContext(), message, Toast.LENGTH_LONG)
+                        .also { it.show() }
                 }
             }
         }

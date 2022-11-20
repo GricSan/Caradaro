@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.google.android.gms.maps.GoogleMap
@@ -28,8 +27,8 @@ class LocationScreen : Fragment(), OnMapReadyCallback {
     private val viewModel: LocationScreenViewModel by viewModels()
 
     private var gMap: GoogleMap? = null
-    private var vehicleInfoInAnimation: Animation? = null
-    private var vehicleInfoOutAnimation: Animation? = null
+    private var vehicleInfoCardInAnimation: Animation? = null
+    private var vehicleInfoCardOutAnimation: Animation? = null
 
 
     override fun onCreateView(
@@ -39,12 +38,12 @@ class LocationScreen : Fragment(), OnMapReadyCallback {
     ): View {
         _binding = FragmentLocationScreenBinding.inflate(layoutInflater, container, false)
 
-        vehicleInfoInAnimation = AnimationUtils.loadAnimation(
+        vehicleInfoCardInAnimation = AnimationUtils.loadAnimation(
             binding.root.context,
             R.anim.anim_vehicle_info_card__slide_in_from_bottom
         )
 
-        vehicleInfoOutAnimation = AnimationUtils.loadAnimation(
+        vehicleInfoCardOutAnimation = AnimationUtils.loadAnimation(
             binding.root.context,
             R.anim.anim_vehicle_info_card_slide_out_to_bottom
         )
@@ -71,54 +70,46 @@ class LocationScreen : Fragment(), OnMapReadyCallback {
 
 
     private fun applyMapConfigurations(googleMap: GoogleMap) {
-        googleMap.apply {
+        with(googleMap) {
             uiSettings.isMapToolbarEnabled = false
         }
     }
 
     private fun setupInteractions(googleMap: GoogleMap) {
-        googleMap.apply {
+        with(googleMap) {
             setOnMarkerClickListener { marker ->
-                vehicleInfoInAnimation?.let { binding.vVehicleInfoCard.startAnimation(it) }
+                vehicleInfoCardInAnimation?.let { binding.vVehicleInfoCard.startAnimation(it) }
+                marker.position
                 viewModel.handleEvent(LocationScreenEvent.VehicleMarkerSelected(marker.tag as Int))
                 false
             }
 
-            setOnMapClickListener {
-                vehicleInfoOutAnimation?.let { binding.vVehicleInfoCard.startAnimation(it) }
+            setOnMapClickListener { _ ->
+                vehicleInfoCardOutAnimation?.let { binding.vVehicleInfoCard.startAnimation(it) }
             }
         }
     }
 
     private fun observeViewState() {
-        viewModel.viewState.observe(viewLifecycleOwner) { state ->
-            when (state) {
-                is LocationScreenViewState.Data -> {
-                    markVehiclesOnMap(state.vehicles)
-                    state.selectedVehicleInfo?.let {
-                        binding.vVehicleInfoCard.setVehicleData(it, "Unknown")
-                    }
-                }
-                is LocationScreenViewState.Error -> {
-                    Toast.makeText(requireContext(), state.message, Toast.LENGTH_LONG).show()
-                }
-                is LocationScreenViewState.Loading -> {
+        with(viewModel) {
+            mapViewState.observe(viewLifecycleOwner) { state ->
 
-                }
+            }
+
+            vehicleInfoCardViewState.observe(viewLifecycleOwner) { state ->
+
             }
         }
     }
 
     private fun markVehiclesOnMap(vehicles: List<Vehicle>) {
-        gMap?.apply {
-            vehicles.forEachIndexed { index, vehicle ->
-                if (vehicle.latitude != null && vehicle.longitude != null) {
-                    val coordinates = LatLng(vehicle.latitude, vehicle.longitude)
-                    val markerOptions = MarkerOptions()
-                        .position(coordinates)
-                        .title("Vehicle #${index.plus(1)}")
-                    addMarker(markerOptions)?.also { it.tag = vehicle.id }
-                }
+        vehicles.forEachIndexed { index, vehicle ->
+            if (vehicle.latitude != null && vehicle.longitude != null) {
+                val coordinates = LatLng(vehicle.latitude, vehicle.longitude)
+                val markerOptions = MarkerOptions()
+                    .position(coordinates)
+                    .title("Vehicle #${index.plus(1)}")
+                gMap?.addMarker(markerOptions)?.also { it.tag = vehicle.id }
             }
         }
     }

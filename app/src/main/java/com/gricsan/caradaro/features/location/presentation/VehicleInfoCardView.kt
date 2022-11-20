@@ -35,9 +35,7 @@ class VehicleInfoCardView @JvmOverloads constructor(
             R.styleable.VehicleInfoCardView,
             defStyleAttr,
             0
-        ).let {
-            it.recycle()
-        }
+        ).let { it.recycle() }
     }
 
 

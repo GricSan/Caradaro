@@ -1,8 +1,8 @@
 package com.gricsan.caradaro.features.user_list.di
 
 import com.gricsan.caradaro.base.data.db.AppRoomDatabase
+import com.gricsan.caradaro.base.data.db.daos.UserDAO
 import com.gricsan.caradaro.base.data.db.daos.VehicleDAO
-import com.gricsan.caradaro.features.user_list.data.datasources.local.UserDAO
 import com.gricsan.caradaro.features.user_list.data.datasources.remote.UserApiService
 import com.gricsan.caradaro.features.user_list.data.repos.UserRepositoryImpl
 import com.gricsan.caradaro.features.user_list.domain.contracts.UserRepository

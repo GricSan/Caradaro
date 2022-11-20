@@ -2,10 +2,11 @@ package com.gricsan.caradaro.features.location.presentation
 
 import androidx.lifecycle.*
 import com.gricsan.caradaro.base.domain.models.Result
+import com.gricsan.caradaro.features.location.presentation.viewstates.MapViewState
+import com.gricsan.caradaro.features.location.presentation.viewstates.VehicleInfoCardViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -18,10 +19,11 @@ class LocationScreenViewModel @Inject constructor(
         private const val ARGS_KEY_USER_ID = "userId"
     }
 
+    private val _mapViewState = MutableLiveData(MapViewState())
+    val mapViewState: LiveData<MapViewState> get() = _mapViewState
 
-    private val _viewState = MutableLiveData<LocationScreenViewState>()
-        .apply { value = LocationScreenViewState.Data() }
-    val viewState: LiveData<LocationScreenViewState> = _viewState
+    private val _vehicleInfoCardViewState = MutableLiveData(VehicleInfoCardViewState())
+    val vehicleInfoCardViewState: LiveData<VehicleInfoCardViewState> get() = _vehicleInfoCardViewState
 
 
     fun handleEvent(event: LocationScreenEvent) {
@@ -30,7 +32,7 @@ class LocationScreenViewModel @Inject constructor(
                 savedStateHandle.get<Int>(ARGS_KEY_USER_ID)?.let { loadUserVehiclesLocations(it) }
             }
             is LocationScreenEvent.VehicleMarkerSelected -> {
-                loadVehicleDetails(event.vehicleId)
+                updateVehicleInfoCardViewState(event.vehicleId)
             }
         }
     }
@@ -38,36 +40,22 @@ class LocationScreenViewModel @Inject constructor(
 
     private fun loadUserVehiclesLocations(userId: Int) {
         useCases.getUserVehiclesLocations(userId).onEach { result ->
-            val newState = when(result) {
+            when (result) {
                 is Result.Success -> {
-                    LocationScreenViewState.Data(vehicles = result.data)
+
                 }
                 is Result.Error -> {
-                    LocationScreenViewState.Error(message = result.message)
+
                 }
                 is Result.Loading -> {
-                    LocationScreenViewState.Loading
+
                 }
             }
-            _viewState.postValue(newState)
         }.launchIn(viewModelScope)
     }
 
-    private fun loadVehicleDetails(vehicleId: Int) {
-        viewModelScope.launch {
-            val newState = when (val result = useCases.getVehicleDetails(vehicleId)) {
-                is Result.Success -> {
-                    LocationScreenViewState.Data(selectedVehicleInfo = result.data)
-                }
-                is Result.Error -> {
-                    LocationScreenViewState.Error(result.message)
-                }
-                is Result.Loading -> {
-                    LocationScreenViewState.Loading
-                }
-            }
-            _viewState.postValue(newState)
-        }
+    private fun updateVehicleInfoCardViewState(vehicleId: Int) {
+
     }
 
 }
