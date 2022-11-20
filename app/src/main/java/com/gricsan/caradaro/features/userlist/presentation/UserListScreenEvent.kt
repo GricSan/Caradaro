@@ -1,4 +1,4 @@
-package com.gricsan.caradaro.features.user_list.presentation
+package com.gricsan.caradaro.features.userlist.presentation
 
 sealed class UserListScreenEvent {
     object ViewReady: UserListScreenEvent()

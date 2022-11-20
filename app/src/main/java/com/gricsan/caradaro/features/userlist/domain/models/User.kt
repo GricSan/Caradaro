@@ -1,4 +1,4 @@
-package com.gricsan.caradaro.features.user_list.domain.models
+package com.gricsan.caradaro.features.userlist.domain.models
 
 data class User(
     val id: Int,

@@ -2,7 +2,7 @@ package com.gricsan.caradaro.base.data.db.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.gricsan.caradaro.features.user_list.domain.models.User
+import com.gricsan.caradaro.features.userlist.domain.models.User
 
 @Entity(tableName = "user")
 data class UserEntity(

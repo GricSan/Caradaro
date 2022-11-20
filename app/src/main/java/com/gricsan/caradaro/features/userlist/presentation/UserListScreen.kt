@@ -1,4 +1,4 @@
-package com.gricsan.caradaro.features.user_list.presentation
+package com.gricsan.caradaro.features.userlist.presentation
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,7 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.gricsan.caradaro.base.utils.safeNavigate
 import com.gricsan.caradaro.databinding.FragmentUserListScreenBinding
-import com.gricsan.caradaro.features.user_list.domain.models.User
+import com.gricsan.caradaro.features.userlist.domain.models.User
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

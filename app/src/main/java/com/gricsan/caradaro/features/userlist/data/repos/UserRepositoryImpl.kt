@@ -1,11 +1,11 @@
-package com.gricsan.caradaro.features.user_list.data.repos
+package com.gricsan.caradaro.features.userlist.data.repos
 
 import com.gricsan.caradaro.base.data.db.daos.UserDAO
 import com.gricsan.caradaro.base.data.db.daos.VehicleDAO
-import com.gricsan.caradaro.features.user_list.data.datasources.remote.UserApiService
-import com.gricsan.caradaro.features.user_list.data.datasources.remote.dtos.UserDTO
-import com.gricsan.caradaro.features.user_list.domain.contracts.UserRepository
-import com.gricsan.caradaro.features.user_list.domain.models.User
+import com.gricsan.caradaro.features.userlist.data.datasources.remote.UserApiService
+import com.gricsan.caradaro.features.userlist.data.datasources.remote.dtos.UserDTO
+import com.gricsan.caradaro.features.userlist.domain.contracts.UserRepository
+import com.gricsan.caradaro.features.userlist.domain.models.User
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 

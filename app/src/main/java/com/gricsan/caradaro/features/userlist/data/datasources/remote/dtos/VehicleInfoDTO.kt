@@ -1,4 +1,4 @@
-package com.gricsan.caradaro.features.user_list.data.datasources.remote.dtos
+package com.gricsan.caradaro.features.userlist.data.datasources.remote.dtos
 
 import com.google.gson.annotations.SerializedName
 import com.gricsan.caradaro.base.data.db.entities.VehicleEntity

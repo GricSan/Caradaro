@@ -1,8 +1,8 @@
-package com.gricsan.caradaro.features.user_list.domain.usecases
+package com.gricsan.caradaro.features.userlist.domain.usecases
 
 import com.gricsan.caradaro.base.domain.models.Result
-import com.gricsan.caradaro.features.user_list.domain.contracts.UserRepository
-import com.gricsan.caradaro.features.user_list.domain.models.User
+import com.gricsan.caradaro.features.userlist.domain.contracts.UserRepository
+import com.gricsan.caradaro.features.userlist.domain.models.User
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException

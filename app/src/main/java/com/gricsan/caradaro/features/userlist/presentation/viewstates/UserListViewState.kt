@@ -1,6 +1,6 @@
-package com.gricsan.caradaro.features.user_list.presentation.viewstates
+package com.gricsan.caradaro.features.userlist.presentation.viewstates
 
-import com.gricsan.caradaro.features.user_list.domain.models.User
+import com.gricsan.caradaro.features.userlist.domain.models.User
 
 data class UserListViewState(
     val data: List<User> = emptyList(),

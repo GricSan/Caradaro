@@ -2,7 +2,7 @@ package com.gricsan.caradaro.base.data.db.daos
 
 import androidx.room.*
 import com.gricsan.caradaro.base.data.db.entities.UserEntity
-import com.gricsan.caradaro.features.user_list.domain.models.User
+import com.gricsan.caradaro.features.userlist.domain.models.User
 
 @Dao
 interface UserDAO {

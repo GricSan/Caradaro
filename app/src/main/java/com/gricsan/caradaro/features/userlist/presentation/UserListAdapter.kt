@@ -1,4 +1,4 @@
-package com.gricsan.caradaro.features.user_list.presentation
+package com.gricsan.caradaro.features.userlist.presentation
 
 import android.annotation.SuppressLint
 import android.graphics.Rect
@@ -13,7 +13,7 @@ import com.gricsan.caradaro.R
 import com.gricsan.caradaro.base.utils.dp
 import com.gricsan.caradaro.base.utils.loadImageFromUrl
 import com.gricsan.caradaro.databinding.VhUserListItemBinding
-import com.gricsan.caradaro.features.user_list.domain.models.User
+import com.gricsan.caradaro.features.userlist.domain.models.User
 
 class UserListAdapter(
     private val onItemClicked: ((User) -> Unit)? = null

@@ -1,11 +1,11 @@
-package com.gricsan.caradaro.features.user_list.presentation
+package com.gricsan.caradaro.features.userlist.presentation
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gricsan.caradaro.base.domain.models.Result
-import com.gricsan.caradaro.features.user_list.presentation.viewstates.UserListViewState
+import com.gricsan.caradaro.features.userlist.presentation.viewstates.UserListViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach

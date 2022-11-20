@@ -1,13 +1,13 @@
-package com.gricsan.caradaro.features.user_list.di
+package com.gricsan.caradaro.features.userlist.di
 
 import com.gricsan.caradaro.base.data.db.AppRoomDatabase
 import com.gricsan.caradaro.base.data.db.daos.UserDAO
 import com.gricsan.caradaro.base.data.db.daos.VehicleDAO
-import com.gricsan.caradaro.features.user_list.data.datasources.remote.UserApiService
-import com.gricsan.caradaro.features.user_list.data.repos.UserRepositoryImpl
-import com.gricsan.caradaro.features.user_list.domain.contracts.UserRepository
-import com.gricsan.caradaro.features.user_list.domain.usecases.GetUsersUseCase
-import com.gricsan.caradaro.features.user_list.presentation.UserListScreenUseCases
+import com.gricsan.caradaro.features.userlist.data.datasources.remote.UserApiService
+import com.gricsan.caradaro.features.userlist.data.repos.UserRepositoryImpl
+import com.gricsan.caradaro.features.userlist.domain.contracts.UserRepository
+import com.gricsan.caradaro.features.userlist.domain.usecases.GetUsersUseCase
+import com.gricsan.caradaro.features.userlist.presentation.UserListScreenUseCases
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
