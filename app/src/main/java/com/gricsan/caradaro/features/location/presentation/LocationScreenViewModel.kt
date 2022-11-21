@@ -5,9 +5,6 @@ import com.gricsan.caradaro.base.domain.models.Result
 import com.gricsan.caradaro.features.location.presentation.viewstates.MapViewState
 import com.gricsan.caradaro.features.location.presentation.viewstates.VehicleInfoCardViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
