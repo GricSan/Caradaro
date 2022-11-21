@@ -3,7 +3,6 @@ package com.gricsan.caradaro.base.data.db.daos
 import androidx.room.*
 import com.gricsan.caradaro.base.data.db.entities.VehicleEntity
 import com.gricsan.caradaro.base.domain.models.Vehicle
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface VehicleDAO {
@@ -12,10 +11,10 @@ interface VehicleDAO {
     suspend fun getVehicleById(vehicleId: Int): Vehicle?
 
     @Query("SELECT * FROM vehicle")
-    fun getVehicles(): Flow<List<Vehicle>>
+    suspend fun getVehicles(): List<Vehicle>
 
     @Query("SELECT * FROM vehicle where ownerId = :ownerId")
-    fun getVehiclesByOwnerId(ownerId: Int): Flow<List<Vehicle>>
+    suspend fun getVehiclesByOwnerId(ownerId: Int): List<Vehicle>
 
     @Query(
         "UPDATE vehicle SET " +

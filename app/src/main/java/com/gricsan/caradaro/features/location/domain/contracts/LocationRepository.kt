@@ -5,5 +5,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface LocationRepository {
     suspend fun getUserVehiclesLocations(userId: Int): Flow<List<Vehicle>>
-    suspend fun getVehicleDetails(vehicleId: Int): Vehicle?
+    suspend fun getVehicleInfo(vehicleId: Int): Vehicle?
 }

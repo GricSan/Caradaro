@@ -19,11 +19,11 @@ class UserListScreen : Fragment() {
 
     private var _binding: FragmentUserListScreenBinding? = null
     private val binding get() = _binding!!
-
     private val viewModel: UserListScreenViewModel by viewModels()
 
-    private var errorToast: Toast? = null
     private var userListAdapter: UserListAdapter? = null
+
+    private var errorToast: Toast? = null
 
 
     override fun onCreateView(

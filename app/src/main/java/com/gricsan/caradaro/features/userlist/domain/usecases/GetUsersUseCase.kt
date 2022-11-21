@@ -15,7 +15,9 @@ class GetUsersUseCase(
     operator fun invoke(): Flow<Result<List<User>>> = flow {
         try {
             emit(Result.Loading())
-            repo.getUsers().collect { emit(Result.Success(it)) }
+            repo.getUsers().collect {
+                emit(Result.Success(it))
+            }
         } catch (e: HttpException) {
             emit(Result.Error(e.localizedMessage ?: "An unexpected error occurred!"))
         } catch (e: IOException) {

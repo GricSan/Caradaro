@@ -10,6 +10,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.gricsan.caradaro.R
 import com.gricsan.caradaro.base.domain.models.Vehicle
 import com.gricsan.caradaro.base.utils.dp
+import com.gricsan.caradaro.base.utils.getAddressName
 import com.gricsan.caradaro.base.utils.loadImageFromUrl
 import com.gricsan.caradaro.databinding.ViewVehicleInfoCardBinding
 
@@ -18,6 +19,11 @@ class VehicleInfoCardView @JvmOverloads constructor(
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : ConstraintLayout(context, attrs, defStyleAttr) {
+
+    companion object {
+        private const val STRING_ADDRESS_NAME_UNKNOWN = "unknown"
+    }
+
 
     private val imageTransformationOptions = RequestOptions().transform(
         CenterCrop(),
@@ -39,17 +45,19 @@ class VehicleInfoCardView @JvmOverloads constructor(
     }
 
 
-    fun setVehicleData(vehicle: Vehicle, addressName: String) {
+    fun setVehicleData(vehicle: Vehicle) {
         _binding.apply {
             val vehicleName = "${vehicle.manufacturerName} ${vehicle.modelName}"
             tvVehicleName.text = vehicleName
-            tvVehicleAddress.text = addressName
             tvVehicleColor.text = vehicle.colorHexValue
             ivVehiclePhoto.loadImageFromUrl(
                 url = vehicle.photoUrl,
                 thumbnailResId = R.drawable.img_car_photo_placeholder,
                 options = imageTransformationOptions
             )
+            getAddressName(context, vehicle.latitude, vehicle.longitude) { addressName ->
+                tvVehicleAddress.text = addressName ?: STRING_ADDRESS_NAME_UNKNOWN
+            }
         }
     }
 

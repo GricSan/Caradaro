@@ -5,5 +5,6 @@ import com.gricsan.caradaro.base.domain.models.Vehicle
 data class VehicleInfoCardViewState(
     val data: Vehicle? = null,
     val error: String? = null,
-    val loading: Boolean = false
+    val loading: Boolean = false,
+    val isShown: Boolean = false
 )

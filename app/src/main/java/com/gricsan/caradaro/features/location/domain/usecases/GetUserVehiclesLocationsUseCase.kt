@@ -15,7 +15,9 @@ class GetUserVehiclesLocationsUseCase(
     operator fun invoke(userId: Int): Flow<Result<List<Vehicle>>> = flow {
         try {
             emit(Result.Loading())
-            repo.getUserVehiclesLocations(userId).collect { emit(Result.Success(it)) }
+            repo.getUserVehiclesLocations(userId).collect {
+                emit(Result.Success(it))
+            }
         } catch (e: HttpException) {
             emit(Result.Error(e.localizedMessage ?: "An unexpected error occurred!"))
         } catch (e: IOException) {
