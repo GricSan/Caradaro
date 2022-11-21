@@ -1,6 +1,5 @@
 package com.gricsan.caradaro.features.location.presentation
 
-import android.location.Geocoder
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +8,6 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
@@ -27,7 +25,6 @@ class LocationScreen : Fragment(), OnMapReadyCallback {
     private val viewModel: LocationScreenViewModel by viewModels()
 
     private var gMap: GoogleMap? = null
-    private var geocoder:  Geocoder? = null
 
     private var errorToast: Toast? = null
 
@@ -50,7 +47,6 @@ class LocationScreen : Fragment(), OnMapReadyCallback {
             applyMapConfigurations(this)
             setupMapInteractions(this)
         }
-        geocoder = Geocoder(requireContext())
         observeViewState()
         viewModel.handleEvent(LocationScreenEvent.ViewReady)
     }
@@ -108,33 +104,17 @@ class LocationScreen : Fragment(), OnMapReadyCallback {
     }
 
     private fun markVehiclesOnMap(vehicles: List<Vehicle>) {
-        var markersCount = 0
-        var avgLat = 0.0
-        var avgLng = 0.0
-
-        vehicles.forEachIndexed { index, vehicle ->
-            if (vehicle.latitude != null && vehicle.longitude != null) {
-                markersCount++
-                avgLat += vehicle.latitude
-                avgLng += vehicle.longitude
-
-                val coordinates = LatLng(vehicle.latitude, vehicle.longitude)
-                val markerOptions = MarkerOptions()
-                    .position(coordinates)
-                    .title("Vehicle #${index.plus(1)}")
-                gMap?.addMarker(markerOptions)?.also { it.tag = vehicle.id }
+        gMap?.let { map ->
+            map.clear()
+            vehicles.forEachIndexed { index, vehicle ->
+                if (vehicle.latitude != null && vehicle.longitude != null) {
+                    val coordinates = LatLng(vehicle.latitude, vehicle.longitude)
+                    val markerOptions = MarkerOptions()
+                        .position(coordinates)
+                        .title("Vehicle #${index.plus(1)}")
+                    map.addMarker(markerOptions)?.also { it.tag = vehicle.id }
+                }
             }
-        }
-
-        zoomCameraTo(
-            LatLng(avgLat.div(markersCount), avgLng.div(markersCount))
-        )
-    }
-
-    private fun zoomCameraTo(coordinates: LatLng) {
-        gMap?.apply {
-            val cameraZoomValue = 8f
-            moveCamera(CameraUpdateFactory.newLatLngZoom(coordinates, cameraZoomValue))
         }
     }
 

@@ -12,7 +12,7 @@ class GetUserVehiclesLocationsUseCase(
     private val repo: LocationRepository
 ) {
 
-    operator fun invoke(userId: Int): Flow<Result<List<Vehicle>>> = flow {
+    suspend operator fun invoke(userId: Int): Flow<Result<List<Vehicle>>> = flow {
         try {
             emit(Result.Loading())
             repo.getUserVehiclesLocations(userId).collect {

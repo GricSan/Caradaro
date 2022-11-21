@@ -5,6 +5,7 @@ import com.gricsan.caradaro.base.domain.models.Result
 import com.gricsan.caradaro.features.location.presentation.viewstates.MapViewState
 import com.gricsan.caradaro.features.location.presentation.viewstates.VehicleInfoCardViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -19,6 +20,7 @@ class LocationScreenViewModel @Inject constructor(
     companion object {
         private const val ARGS_KEY_USER_ID = "userId"
     }
+
 
     private val _mapViewState = MutableLiveData(MapViewState())
     val mapViewState: LiveData<MapViewState> get() = _mapViewState
@@ -47,60 +49,63 @@ class LocationScreenViewModel @Inject constructor(
 
 
     private fun loadUserVehiclesLocations(userId: Int) {
-        useCases.getUserVehiclesLocations(userId).onEach { result ->
-            val newState = when (result) {
-                is Result.Success -> {
-                    _mapViewState.value!!.copy(
-                        data = result.data,
-                        error = null,
-                        loading = false
-                    )
+        viewModelScope.launch {
+            useCases.getUserVehiclesLocations(userId).collect { result ->
+                val newState = when (result) {
+                    is Result.Success -> {
+                        _mapViewState.value!!.copy(
+                            data = result.data,
+                            error = null,
+                            loading = false
+                        )
+                    }
+                    is Result.Error -> {
+                        _mapViewState.value!!.copy(
+                            error = result.message,
+                            loading = false
+                        )
+                    }
+                    is Result.Loading -> {
+                        _mapViewState.value!!.copy(
+                            error = null,
+                            loading = true
+                        )
+                    }
                 }
-                is Result.Error -> {
-                    _mapViewState.value!!.copy(
-                        error = result.message,
-                        loading = false
-                    )
-                }
-                is Result.Loading -> {
-                    _mapViewState.value!!.copy(
-                        error = null,
-                        loading = true
-                    )
-                }
+                _mapViewState.postValue(newState)
             }
-            _mapViewState.postValue(newState)
-        }.launchIn(viewModelScope)
+        }
     }
 
     private fun loadSelectedVehicleInfo(vehicleId: Int) {
         viewModelScope.launch {
-            val result = useCases.getVehicleInfo(vehicleId)
-            val newState = when (result) {
-                is Result.Success -> {
-                    _vehicleInfoCardViewState.value!!.copy(
-                        data = result.data,
-                        error = null,
-                        loading = false,
-                        isShown = true
-                    )
+            useCases.getVehicleInfo(vehicleId).collect { result ->
+                val newState = when (result) {
+                    is Result.Success -> {
+                        _vehicleInfoCardViewState.value!!.copy(
+                            data = result.data,
+                            error = null,
+                            loading = false,
+                            isShown = true
+                        )
+                    }
+                    is Result.Error -> {
+                        _vehicleInfoCardViewState.value!!.copy(
+                            error = result.message,
+                            loading = false,
+                            isShown = true
+                        )
+                    }
+                    is Result.Loading -> {
+                        _vehicleInfoCardViewState.value!!.copy(
+                            error = null,
+                            loading = true,
+                            isShown = true
+                        )
+                    }
                 }
-                is Result.Error -> {
-                    _vehicleInfoCardViewState.value!!.copy(
-                        error = result.message,
-                        loading = false,
-                        isShown = true
-                    )
-                }
-                is Result.Loading -> {
-                    _vehicleInfoCardViewState.value!!.copy(
-                        error = null,
-                        loading = true,
-                        isShown = true
-                    )
-                }
+                _vehicleInfoCardViewState.postValue(newState)
             }
-            _vehicleInfoCardViewState.postValue(newState)
         }
     }
 
